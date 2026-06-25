@@ -5,8 +5,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chicago Crime Analytics Dashboard</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>  
+<style>
+    .icon i {
+        font-size: 28px;
+    }
+
+    .section h2 i {
+        color: #06b6d4;
+        margin-right: 8px;
+    }
+
+    header h1 i {
+        margin-right: 10px;
+        color: #ffffff;
+    }
     * {
         box-sizing: border-box;
     }
@@ -199,7 +213,7 @@
 <body>
 
 <header>
-    <h1>🚔 Chicago Crime Analytics Dashboard</h1>
+    <h1><i class="fas fa-shield-halved"></i> Chicago Crime Analytics Dashboard</h1>
     <p>Exploring crime patterns and trends across the city of Chicago</p>
 </header>
 
@@ -208,22 +222,22 @@
     <!-- Key Metrics -->
     <div class="cards">
         <div class="card crimes">
-            <span class="icon">📊</span>
-            <h3>Total Crimes</h3>
-            <p>{{ total_crimes }}</p>
+        <span class="icon"><i class="fas fa-chart-line"></i></span>            
+        <h3>Total Crimes</h3>
+        <p>{{ total_crimes }}</p>
         </div>
         <div class="card arrest">
-            <span class="icon">⚖️</span>
+            <span class="icon"><i class="fas fa-gavel"></i></span>
             <h3>Arrest Rate</h3>
             <p>{{ arrest_rate }}%</p>
         </div>
         <div class="card common">
-            <span class="icon">🔎</span>
+            <span class="icon"><i class="fas fa-magnifying-glass"></i></span>
             <h3>Most Common Crime</h3>
             <p style="font-size:19px;">{{ most_common_crime }}</p>
         </div>
         <div class="card years">
-            <span class="icon">📅</span>
+            <span class="icon"><i class="fas fa-calendar-days"></i></span>
             <h3>Data Coverage</h3>
             <p style="font-size:19px;">{{ year_range }}</p>
         </div>
@@ -232,7 +246,7 @@
     <!-- Tables -->
     <div class="tables-row">
         <div class="section">
-            <h2>📈 Crime Count per Year</h2>
+            <h2><i class="fas fa-arrow-trend-up"></i> Crime Count per Year</h2>
             <table>
                 <thead><tr><th>Year</th><th>Crime Count</th></tr></thead>
                 <tbody>
@@ -244,7 +258,7 @@
         </div>
 
         <div class="section">
-            <h2>🏷️ Top 5 Crime Types</h2>
+            <h2><i class="fas fa-tags"></i> Top 5 Crime Types</h2>
             <table>
                 <thead><tr><th>Crime Type</th><th>Count</th><th>%</th></tr></thead>
                 <tbody>
@@ -256,7 +270,7 @@
         </div>
 
         <div class="section">
-            <h2>🚨 Arrests per Year</h2>
+            <h2><i class="fas fa-handcuffs"></i> Arrests per Year</h2>
             <table>
                 <thead><tr><th>Year</th><th>Arrest Count</th></tr></thead>
                 <tbody>
@@ -270,7 +284,7 @@
 
     <!-- Charts -->
     <div class="section">
-        <h2>🖼️ Visual Reports</h2>
+        <h2><i class="fas fa-chart-pie"></i> Visual Reports</h2>
         <div class="chart-grid">
             <div class="chart-card"><img src="{% static 'charts/1_crime_trend_by_year.png' %}" alt="Crime trend by year"></div>
             <div class="chart-card"><img src="{% static 'charts/2_top10_crime_categories.png' %}" alt="Top 10 crime categories"></div>
