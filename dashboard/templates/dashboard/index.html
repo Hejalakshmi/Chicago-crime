@@ -12,7 +12,7 @@
     }
     body {
         font-family: 'Poppins', Arial, sans-serif;
-        background: #f7f4ff;
+        background: #eef6ff;
         margin: 0;
         padding: 0;
         color: #2c2c3a;
@@ -20,7 +20,7 @@
 
     /* ---------- Header ---------- */
     header {
-        background: linear-gradient(120deg, #6a3df5 0%, #d63ddb 50%, #ff7a5c 100%);
+        background: linear-gradient(120deg, #0f172a 0%, #1e3a8a 50%, #06b6d4 100%);
         color: white;
         padding: 45px 50px;
         text-align: center;
@@ -62,10 +62,26 @@
         transform: translateY(-6px) scale(1.02);
         box-shadow: 0 14px 28px rgba(0,0,0,0.2);
     }
-    .card.crimes { background: linear-gradient(135deg, #ff5f6d, #ffc371); }
-    .card.arrest { background: linear-gradient(135deg, #00c9a7, #1ad1c4); }
-    .card.common { background: linear-gradient(135deg, #5b86e5, #36d1dc); }
-    .card.years  { background: linear-gradient(135deg, #a36bf4, #ff6fd8); }
+    .card.crimes {
+        background: linear-gradient(135deg, #2563eb, #38bdf8);
+    }
+    
+
+    .chart-card:hover img {
+        transform: scale(1.05);
+    }
+
+    .card.arrest {
+        background: linear-gradient(135deg, #059669, #34d399);
+    }
+
+    .card.common {
+        background: linear-gradient(135deg, #7c3aed, #a78bfa);
+    }
+
+    .card.years {
+        background: linear-gradient(135deg, #ea580c, #fb923c);
+    }
 
     .card .icon {
         font-size: 28px;
@@ -88,18 +104,20 @@
 
     /* ---------- Sections ---------- */
     .section {
-        background: white;
-        border-radius: 16px;
-        padding: 26px;
-        margin-bottom: 30px;
-        box-shadow: 0 6px 18px rgba(106, 61, 245, 0.08);
-        border: 1px solid #f1ecff;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 26px;
+    margin-bottom: 30px;
+    box-shadow: 0 6px 18px rgba(106, 61, 245, 0.08);
+    border: 1px solid rgba(255,255,255,0.4);
     }
+   
     .section h2 {
         margin: 0 0 18px;
         font-size: 18px;
         font-weight: 700;
-        color: #4b2ea3;
+        color: #1e40af;
         padding-bottom: 12px;
         border-bottom: 2px dashed #ece4ff;
         display: flex;
@@ -113,18 +131,21 @@
         gap: 22px;
     }
     .chart-card {
-        border-radius: 12px;
+        border-radius: 15px;
         overflow: hidden;
         border: 2px solid #f1ecff;
         transition: box-shadow 0.2s ease, border-color 0.2s ease;
     }
     .chart-card:hover {
-        border-color: #d63ddb;
+        border-color: #06b6d4;
         box-shadow: 0 8px 22px rgba(214, 61, 219, 0.18);
     }
     .chart-card img {
         width: 100%;
         display: block;
+    }
+    .chart-card img {
+        transition: transform 0.4s ease;
     }
 
     /* ---------- Tables ---------- */
@@ -139,7 +160,7 @@
         font-size: 14px;
     }
     thead th {
-        background: linear-gradient(135deg, #6a3df5, #d63ddb);
+        background: linear-gradient(135deg, #1e3a8a, #06b6d4);
         color: white;
         font-weight: 600;
         text-transform: uppercase;
