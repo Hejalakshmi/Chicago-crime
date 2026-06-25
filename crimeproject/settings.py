@@ -19,6 +19,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.middleware.security.SecurityMiddleware',
 ]
 
 ROOT_URLCONF = 'crimeproject.urls'
