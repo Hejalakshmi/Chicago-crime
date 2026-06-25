@@ -1,2 +1,5 @@
-django
+Django
 pandas
+numpy
+gunicorn
+whitenoise
