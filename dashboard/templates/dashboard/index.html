@@ -1,0 +1,273 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chicago Crime Analytics Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    body {
+        font-family: 'Poppins', Arial, sans-serif;
+        background: #f7f4ff;
+        margin: 0;
+        padding: 0;
+        color: #2c2c3a;
+    }
+
+    /* ---------- Header ---------- */
+    header {
+        background: linear-gradient(120deg, #6a3df5 0%, #d63ddb 50%, #ff7a5c 100%);
+        color: white;
+        padding: 45px 50px;
+        text-align: center;
+    }
+    header h1 {
+        margin: 0;
+        font-size: 32px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+    }
+    header p {
+        margin: 10px 0 0;
+        color: #fce8ff;
+        font-size: 15px;
+        font-weight: 400;
+    }
+
+    .container {
+        padding: 35px 50px 60px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    /* ---------- Stat Cards ---------- */
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 22px;
+        margin-bottom: 35px;
+    }
+    .card {
+        border-radius: 16px;
+        padding: 24px;
+        color: white;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: 0 14px 28px rgba(0,0,0,0.2);
+    }
+    .card.crimes { background: linear-gradient(135deg, #ff5f6d, #ffc371); }
+    .card.arrest { background: linear-gradient(135deg, #00c9a7, #1ad1c4); }
+    .card.common { background: linear-gradient(135deg, #5b86e5, #36d1dc); }
+    .card.years  { background: linear-gradient(135deg, #a36bf4, #ff6fd8); }
+
+    .card .icon {
+        font-size: 28px;
+        margin-bottom: 10px;
+        display: block;
+    }
+    .card h3 {
+        margin: 0 0 6px;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        font-weight: 600;
+        opacity: 0.9;
+    }
+    .card p {
+        margin: 0;
+        font-size: 28px;
+        font-weight: 700;
+    }
+
+    /* ---------- Sections ---------- */
+    .section {
+        background: white;
+        border-radius: 16px;
+        padding: 26px;
+        margin-bottom: 30px;
+        box-shadow: 0 6px 18px rgba(106, 61, 245, 0.08);
+        border: 1px solid #f1ecff;
+    }
+    .section h2 {
+        margin: 0 0 18px;
+        font-size: 18px;
+        font-weight: 700;
+        color: #4b2ea3;
+        padding-bottom: 12px;
+        border-bottom: 2px dashed #ece4ff;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .chart-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+        gap: 22px;
+    }
+    .chart-card {
+        border-radius: 12px;
+        overflow: hidden;
+        border: 2px solid #f1ecff;
+        transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .chart-card:hover {
+        border-color: #d63ddb;
+        box-shadow: 0 8px 22px rgba(214, 61, 219, 0.18);
+    }
+    .chart-card img {
+        width: 100%;
+        display: block;
+    }
+
+    /* ---------- Tables ---------- */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 5px;
+    }
+    th, td {
+        text-align: left;
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+    thead th {
+        background: linear-gradient(135deg, #6a3df5, #d63ddb);
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+    }
+    thead th:first-child { border-radius: 8px 0 0 8px; }
+    thead th:last-child { border-radius: 0 8px 8px 0; }
+    tbody tr {
+        border-bottom: 1px solid #f1ecff;
+    }
+    tbody tr:nth-child(odd) {
+        background-color: #faf8ff;
+    }
+    tbody tr:hover {
+        background-color: #f1e8ff;
+    }
+    tbody td {
+        color: #2c2c3a;
+    }
+
+    .tables-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 22px;
+    }
+
+    footer {
+        text-align: center;
+        padding: 25px;
+        color: #9a8fc2;
+        font-size: 13px;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>🚔 Chicago Crime Analytics Dashboard</h1>
+    <p>Exploring crime patterns and trends across the city of Chicago</p>
+</header>
+
+<div class="container">
+
+    <!-- Key Metrics -->
+    <div class="cards">
+        <div class="card crimes">
+            <span class="icon">📊</span>
+            <h3>Total Crimes</h3>
+            <p>{{ total_crimes }}</p>
+        </div>
+        <div class="card arrest">
+            <span class="icon">⚖️</span>
+            <h3>Arrest Rate</h3>
+            <p>{{ arrest_rate }}%</p>
+        </div>
+        <div class="card common">
+            <span class="icon">🔎</span>
+            <h3>Most Common Crime</h3>
+            <p style="font-size:19px;">{{ most_common_crime }}</p>
+        </div>
+        <div class="card years">
+            <span class="icon">📅</span>
+            <h3>Data Coverage</h3>
+            <p style="font-size:19px;">{{ year_range }}</p>
+        </div>
+    </div>
+
+    <!-- Tables -->
+    <div class="tables-row">
+        <div class="section">
+            <h2>📈 Crime Count per Year</h2>
+            <table>
+                <thead><tr><th>Year</th><th>Crime Count</th></tr></thead>
+                <tbody>
+                {% for row in crime_by_year %}
+                <tr><td>{{ row.Year }}</td><td>{{ row.crime_count }}</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>🏷️ Top 5 Crime Types</h2>
+            <table>
+                <thead><tr><th>Crime Type</th><th>Count</th><th>%</th></tr></thead>
+                <tbody>
+                {% for row in top5_crime_types %}
+                <tr><td>{{ row.primary_type }}</td><td>{{ row.crime_count }}</td><td>{{ row.percentage }}%</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>🚨 Arrests per Year</h2>
+            <table>
+                <thead><tr><th>Year</th><th>Arrest Count</th></tr></thead>
+                <tbody>
+                {% for row in arrest_by_year %}
+                <tr><td>{{ row.Year }}</td><td>{{ row.arrest_count }}</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="section">
+        <h2>🖼️ Visual Reports</h2>
+        <div class="chart-grid">
+            <div class="chart-card"><img src="{% static 'charts/1_crime_trend_by_year.png' %}" alt="Crime trend by year"></div>
+            <div class="chart-card"><img src="{% static 'charts/2_top10_crime_categories.png' %}" alt="Top 10 crime categories"></div>
+            <div class="chart-card"><img src="{% static 'charts/3_heatmap_month_dayofweek.png' %}" alt="Heatmap month vs day of week"></div>
+            <div class="chart-card"><img src="{% static 'charts/4_top10_community_areas.png' %}" alt="Top 10 community areas"></div>
+            <div class="chart-card"><img src="{% static 'charts/5_crimes_by_hour.png' %}" alt="Crimes by hour"></div>
+            <div class="chart-card"><img src="{% static 'charts/6_boxplot_community_outliers.png' %}" alt="Boxplot community outliers"></div>
+            <div class="chart-card"><img src="{% static 'charts/7_correlation_heatmap.png' %}" alt="Correlation heatmap"></div>
+            <div class="chart-card"><img src="{% static 'charts/8_sql_crime_count_per_year.png' %}" alt="SQL crime count per year"></div>
+            <div class="chart-card"><img src="{% static 'charts/9_sql_crime_by_category.png' %}" alt="SQL crime by category"></div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    Chicago Crime Data Analytics Dashboard
+</footer>
+
+</body>
+</html>
